@@ -23,10 +23,20 @@ const JobItem: React.FC = () => {
       })
       .catch((err: Error) => console.log(err));
   };
+
+  const deleteJob = async (row: IjobType) => {
+    try {
+      const response = await deleteJobById(row._id);
+      console.log('Delete response:', response.data);
+    } catch (error) {
+      console.log('Delete error:', error);
+    }
+  };
+
   return (
     <div className="Card">
       <h1>My jobs</h1>
-      <CustomDataGrid rows={jobs} />
+      <CustomDataGrid rows={jobs} deleteJob={deleteJob} hiddenColumns={['_id', 'id','candidatesList']} />
     </div>
   )
 }
