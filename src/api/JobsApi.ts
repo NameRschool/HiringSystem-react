@@ -2,9 +2,9 @@ import axios, { AxiosResponse } from "axios"
 
 const baseUrl: string = "http://localhost:3002"
 
-export const getJobs = async (): Promise<AxiosResponse<ApiDataType>> => {
+export const getJobs = async (): Promise<AxiosResponse<IjobType>> => {
   try {
-    const jobs: AxiosResponse<ApiDataType> = await axios.get(
+    const jobs: AxiosResponse<IjobType> = await axios.get(
       baseUrl + "/api/jobs"
     )
     return jobs
@@ -13,9 +13,10 @@ export const getJobs = async (): Promise<AxiosResponse<ApiDataType>> => {
   }
 }
 
+
 export const addJob = async (
   formData: IjobType
-): Promise<AxiosResponse<ApiDataType>> => {
+): Promise<AxiosResponse<IjobType>> => {
   try {
       const job: Omit<IjobType, "_id"> = {
       name: formData.name,
@@ -25,7 +26,7 @@ export const addJob = async (
       requierments: formData.requierments,
       candidatesList: formData.candidatesList,
     }
-    const saveJob: AxiosResponse<ApiDataType> = await axios.post(
+    const saveJob: AxiosResponse<IjobType> = await axios.post(
       baseUrl + "/api/jobs",
       job
     )

@@ -13,9 +13,10 @@ const App: React.FC = () => {
 
   const fetchJobs = (): void => {
     getJobs()
-      .then((response: AxiosResponse<ApiDataType, any>) => {
+      .then((response: AxiosResponse<IjobType, any>) => {
         console.log(response.data);
-        const { jobs } = response.data;
+        const  jobs = response.data;
+        console.log(typeof jobs)
         if (jobs && Array.isArray(jobs)) {
           const jobsArray: IjobType[] = jobs.map((job: IjobType) => ({
             _id: job._id,
@@ -30,17 +31,17 @@ const App: React.FC = () => {
       })
       .catch((err: Error) => console.log(err));
   };
-  const handleSaveJob = (e: React.FormEvent, formData: IjobType): void => {
-    e.preventDefault()
-    addJob(formData)
-      .then(({ status, data }) => {
-        if (status !== 201) {
-          throw new Error("Error! Todo not saved")
-        }
-        setJobs(data.jobs)
-      })
-      .catch(err => console.log(err))
-  }
+  // const handleSaveJob = (e: React.FormEvent, formData: IjobType): void => {
+  //   e.preventDefault()
+  //   addJob(formData)
+  //     .then(({ status, data }) => {
+  //       if (status !== 201) {
+  //         throw new Error("Error! Todo not saved")
+  //       }
+  //       setJobs(data.jobs)
+  //     })
+  //     .catch(err => console.log(err))
+  // }
   // const handleUpdateTodo = (todo: ITodo): void => {
   //   updateTodo(todo)
   //     .then(({ status, data }) => {
@@ -71,7 +72,7 @@ const App: React.FC = () => {
           <p>{job.location}</p>
         </div>
       ))}
-      <AddJob saveJob={handleSaveJob} />
+      {/* <AddJob saveJob={handleSaveJob} /> */}
       {/* {jobs.map((job: IjobType) => (
         <TodoItem
           key={job._id}

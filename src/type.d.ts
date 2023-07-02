@@ -34,8 +34,3 @@ interface JobsProps {
     jobs: IjobTypejobType
 }
 
-type ApiDataType = {
-    message: string;
-    status: string;
-    jobs: IjobType[]
-}
