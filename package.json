@@ -46,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "@mui/x-data-grid": "^6.9.1",
     "@types/uuid": "^9.0.2"
   }
 }

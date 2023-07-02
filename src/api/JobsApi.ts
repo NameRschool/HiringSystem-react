@@ -3,9 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 const baseUrl: string = "http://localhost:3002"
 
-export const getJobs = async (): Promise<AxiosResponse<IjobType>> => {
+export const getJobs = async (): Promise<AxiosResponse<IjobType[]>> => {
   try {
-    const response: AxiosResponse<IjobType> = await axios.get(
+    const response: AxiosResponse<IjobType[]> = await axios.get(
       `${baseUrl}/api/jobs`
     );
     return response
@@ -45,7 +45,7 @@ export const createJob = async (
   }
 };
 
-export const UpdateJobById = async (
+export const updateJobById = async (
   jobId: string,
   updatedData: Partial<IjobType>
   ): Promise<AxiosResponse<string>> => {

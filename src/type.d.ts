@@ -31,6 +31,6 @@ interface IcandidatesType {
 }
 
 interface JobsProps {
-    jobs: IjobTypejobType
+    jobs: IjobType[]
 }
 
