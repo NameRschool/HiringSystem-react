@@ -13,9 +13,9 @@ const App: React.FC = () => {
 
   const fetchJobs = (): void => {
     getJobs()
-      .then((response: AxiosResponse<ApiDataType, any>) => {
+      .then((response: AxiosResponse<IjobType[], any>) => {
         console.log(response.data);
-        const { jobs } = response.data;
+        const  jobs  = response.data;
         if (jobs && Array.isArray(jobs)) {
           const jobsArray: IjobType[] = jobs.map((job: IjobType) => ({
             _id: job._id,
