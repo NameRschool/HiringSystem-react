@@ -3,13 +3,15 @@ import { TextField, Button, Box } from '@mui/material';
 
 interface InputsProps<T> {
     formData: T;
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    requiredFields?: (keyof T)[];
+    handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (formData: T) => void;
 }
 
 const Inputs = <T extends Record<string, any>>({
     formData,
-    onChange,
+    requiredFields = [],
+    handleChange,
     handleSubmit,
 }: InputsProps<T>) => {
 
@@ -17,7 +19,9 @@ const Inputs = <T extends Record<string, any>>({
         event.preventDefault();
         handleSubmit(formData);
     };
-
+    // const handleRefresh = () => {
+    //     window.location.reload();
+    // };
     return (
         <Box
             component="form"
@@ -34,8 +38,9 @@ const Inputs = <T extends Record<string, any>>({
                     name={key}
                     label={key}
                     variant="filled"
-                    value={value || ''}
-                    onChange={onChange}
+                    onChange={handleChange}
+                    required={requiredFields.includes(key as keyof T)}
+                   
                 />
             ))}
             <Button variant="contained" onClick={handleClick}>
