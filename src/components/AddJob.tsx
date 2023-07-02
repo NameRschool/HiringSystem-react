@@ -2,31 +2,6 @@ import React, { ChangeEvent, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { createJob } from '../api/JobsApi';
 import Inputs from './Form';
-import CustomDataGrid from './Tabel';
-
-// interface IcandidatesInfo {
-//   candidatesId: string;
-//   rating: number;
-//   cognitive: number;
-//   personality: number;
-//   reliability: number;
-//   interview: boolean;
-//   screeningCall: boolean;
-//   task: boolean;
-//   cv: string;
-// }
-
-// interface IjobType {
-//   _id: string;
-//   name: string;
-//   status: boolean;
-//   date: Date;
-//   location: string;
-//   jobDescription?: string;
-//   companyDescription?: string;
-//   requierments: string[];
-//   candidatesList?: IcandidatesInfo[];
-// }
 
 const AddJob: React.FC = () => {
   const initialFormData: Omit<IjobType, '_id' | 'status' | 'date'> = {

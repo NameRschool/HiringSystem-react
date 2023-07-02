@@ -33,10 +33,26 @@ const JobItem: React.FC = () => {
     }
   };
 
+  const UpdateJob = async (row: IjobType) => {
+    try {
+      const updatedData: Partial<IjobType> = {
+        location: '',
+        status:false,
+        jobDescription: '',
+        companyDescription: '',
+        requierments: [],
+      };
+      const response = await updateJobById(row._id, updatedData);
+      console.log('Update success:', response.data);
+    } catch (error) {
+      console.log('Update error:', error);
+    }
+  };
+
   return (
     <div className="Card">
       <h1>My jobs</h1>
-      <CustomDataGrid rows={jobs} deleteJob={deleteJob} hiddenColumns={['_id', 'id','candidatesList']} />
+      <CustomDataGrid rows={jobs} deleteJob={deleteJob}  updateJob={UpdateJob}hiddenColumns={['_id', 'id','candidatesList']} />
     </div>
   )
 }

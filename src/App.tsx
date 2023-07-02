@@ -1,4 +1,3 @@
-import { Icon } from '@mui/material';
 import AddJob from './components/AddJob';
 import JobItem from './components/JobItem'
 
@@ -9,7 +8,6 @@ const App: React.FC = () => {
       <center>
         <JobItem />
         <AddJob/>
-         
          </center>
 
     </main>

@@ -10,61 +10,72 @@ interface DataGridProps<T> {
     rows: T[];
     hiddenColumns?: string[];
     deleteJob: (row: T) => Promise<void>;
+    updateJob:(row: T) =>Promise<void>;
 }
 
-const CustomDataGrid: React.FC<DataGridProps<IjobType>> = ({ rows, deleteJob , hiddenColumns = []}) => {
+const CustomDataGrid: React.FC<DataGridProps<IjobType>> = ({ rows, deleteJob ,updateJob, hiddenColumns = []}) => {
+    const [isEditMode, setIsEditMode] = React.useState(false);
 
     const columns: GridColDef[] = React.useMemo(() => {
         const handleDelete = async (row: IjobType) => {
-            try {
-              await deleteJob(row);
-              console.log('Delete success');
-            } catch (error) {
-              console.log('Delete error:', error);
-            }
-          };
-
-          const handleUpdate = (row: IjobType) => {
-            // Handle update logic here
-            console.log('Update row:', row);
+          try {
+            await deleteJob(row);
+            console.log('Delete success');
+          } catch (error) {
+            console.log('Delete error:', error);
+          }
         };
-
+      
+        const handleUpdate = async(row: IjobType) => {
+            setIsEditMode(!isEditMode);
+            try {
+                await updateJob(row);
+                console.log('Delete success');
+              } catch (error) {
+                console.log('Delete error:', error);
+              }
+        };
+      
         if (rows.length === 0) return [];
+
         const jobKeys = Object.keys(rows[0]);
-        const generatedColumns: GridColDef[] = jobKeys.map((key) => ({
+        const generatedColumns: GridColDef[] = jobKeys
+          .filter((key) => !hiddenColumns.includes(key))
+          .map((key) => ({
             field: key,
             headerName: key,
             width: 150,
-            editable: false,
-            hide: hiddenColumns.includes(key),
-        }));
-
-       const updateColumns: GridColDef ={
-            field: 'update',
-            headerName: 'update',
-            width: 100,
-            renderCell: (params) => (
-                <IconButton onClick={() => handleUpdate(params.row)}>
-                <EditIcon />
-              </IconButton>
-            ),
-        };
-
-        const deleteColumn: GridColDef = {
-            field: 'delete',
-            headerName: 'Delete',
-            width: 100,
-            renderCell: (params) => (
-              <IconButton onClick={() => handleDelete(params.row)}>
-                <GridDeleteIcon />
-              </IconButton>
-            ),
-          };
+            editable: isEditMode,
+            renderHeader: (params) => <div>{params.colDef.headerName}</div>,
+          }));
       
-          generatedColumns.push(deleteColumn,updateColumns);
-
+        const updateColumns: GridColDef = {
+          field: 'update',
+          headerName: 'update',
+          width: 100,
+          renderCell: (params) => (
+            <IconButton onClick={() => handleUpdate(params.row)}>
+              <EditIcon />
+            </IconButton>
+          ),
+        };
+      
+        const deleteColumn: GridColDef = {
+          field: 'delete',
+          headerName: 'Delete',
+          width: 100,
+          renderCell: (params) => (
+            <IconButton onClick={() => handleDelete(params.row)}>
+              <GridDeleteIcon />
+            </IconButton>
+          ),
+        };
+      
+        generatedColumns.push(deleteColumn, updateColumns);
+      
         return generatedColumns;
-    }, [rows, hiddenColumns,deleteJob]);
+      }, [rows, hiddenColumns, deleteJob]);
+      
 
 
 
