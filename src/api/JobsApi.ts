@@ -45,7 +45,7 @@ export const createJob = async (
   }
 };
 
-export const UpdateJobbyId = async (
+export const UpdateJobById = async (
   jobId: string,
   updatedData: Partial<IjobType>
   ): Promise<AxiosResponse<string>> => {

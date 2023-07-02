@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 // import TodoItem from './components/TodoItem'
  import AddJob from './components/AddJob'
-import { getJobs,addJob } from './api/JobsApi'
+import { getJobs } from './api/JobsApi'
 import axios, { AxiosResponse } from 'axios';
 
 const App: React.FC = () => {
