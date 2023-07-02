@@ -74,7 +74,7 @@ const CustomDataGrid: React.FC<DataGridProps<IjobType>> = ({ rows, deleteJob ,up
         generatedColumns.push(deleteColumn, updateColumns);
       
         return generatedColumns;
-      }, [rows, hiddenColumns, deleteJob]);
+      }, [rows, hiddenColumns, deleteJob,updateJob,isEditMode]);
       
 
 
