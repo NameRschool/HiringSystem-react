@@ -15,16 +15,17 @@ const JobItem: React.FC = () => {
     getJobs()
       .then((response: AxiosResponse<IjobType[], any>) => {
         console.log(response.data);
-      const jobs = response.data.map((job, index) => ({
-        ...job,
-        id: index + 1, 
-      }));
-      setJobs(jobs);
+        const jobs = response.data.map((job, index) => ({
+          ...job,
+          id: index + 1,
+        }));
+        setJobs(jobs);
       })
       .catch((err: Error) => console.log(err));
   };
   return (
     <div className="Card">
+      <h1>My jobs</h1>
       <CustomDataGrid rows={jobs} />
     </div>
   )

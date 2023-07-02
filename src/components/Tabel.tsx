@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 
 interface DataGridProps<T> {
@@ -17,7 +17,6 @@ const CustomDataGrid: React.FC<DataGridProps<IjobType>> = ({ rows }) => {
             headerName: key,
             width: 150,
             editable: true,
-            
         }));
 
         return generatedColumns;

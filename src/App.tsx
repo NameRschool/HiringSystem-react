@@ -6,7 +6,6 @@ const App: React.FC = () => {
   return (
     <main className='App'>
       <center>
-        <h1>My jobs</h1>
         <JobItem />
         <AddJob/>
       </center>
