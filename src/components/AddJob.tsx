@@ -1,55 +1,52 @@
-// import React from "react"
+import React, { ChangeEvent, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { createJob } from '../api/JobsApi';
+import Inputs from './Form';
 
-// type Props = JobsProps & {
-//   updateJob: (job: IjobType) => void
-//   deleteJob: (_id: string) => void
-// }
-// const Todo: React.FC<Props> = ({ jobs, updateJob, deleteJob }) => {
-//       // const handleSaveJob = (e: React.FormEvent, formData: IjobType): void => {
-//   //   e.preventDefault()
-//   //   addJob(formData)
-//   //     .then(({ status, data }) => {
-//   //       if (status !== 201) {
-//   //         throw new Error("Error! Todo not saved")
-//   //       }
-//   //       setJobs(data.jobs)
-//   //     })
-//   //     .catch(err => console.log(err))
-//   // }
-//   // const handleUpdateTodo = (todo: ITodo): void => {
-//   //   updateTodo(todo)
-//   //     .then(({ status, data }) => {
-//   //       if (status !== 200) {
-//   //         throw new Error("Error! Todo not updated")
-//   //       }
-//   //       setTodos(data.todos)
-//   //     })
-//   //     .catch(err => console.log(err))
-//   // }
-//     return (
-//       <div className="Card">
-//         {/* <div className="Card--text">
-//           <h1 className={checkJobs}>{jobs.name}</h1>
-//           <span className={checkJobs}>{jobs.location}</span>
-//         </div>
-//         <div className="Card--button">
-//           <button
-//             onClick={() => updateJob(jobs)}
-//             className={jobs.status ? `hide-button` : "Card--button__done"}
-//           >
-//             Complete
-//           </button>
-//           <button
-//             onClick={() => deleteJob(jobs._id)}
-//             className="Card--button__delete"
-//           >
-//             Delete
-//           </button>
-//         </div> */}
-//       </div>
-//     )
-//   }
+interface IjobType {
+  name: string;
+  location: string;
+  jobDescription: string;
+}
+
+const AddJob: React.FC = () => {
+  const [formData, setFormData] = useState<Omit<IjobType, '_id'>>({
+    name: '',
+    location: '',
+    jobDescription: '',
+    requirements: '',
+  });
   
-//   export default Todo
 
-export {}
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const jobData = {
+        _id: uuidv4(),
+        status: true,
+        date: new Date(),
+        ...formData,
+      };
+      const response = await createJob(jobData);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Add Job</h1>
+      <Inputs formData={formData} onChange={handleChange} onSubmit={handleSubmit} />
+    </div>
+  );
+};
+
+export default AddJob;

@@ -13,13 +13,13 @@ interface IcandidatesInfo {
 interface IjobType {
     _id: string;
     name: string;
-    status?: boolean;
-    date?: Date;
+    status: boolean;
+    date: Date;
     location: String;
     jobDescription?: String;
     companyDescription?: string;
-    requierments: [String]
-    candidatesList?: [IcandidatesInfo]
+    requierments: String[]
+    candidatesList?: IcandidatesInfo[]
 }
 
 interface IcandidatesType {

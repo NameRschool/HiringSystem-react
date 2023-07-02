@@ -7,18 +7,17 @@ interface DataGridProps<T> {
     rows: T[];
 }
 
-
-
 const CustomDataGrid: React.FC<DataGridProps<IjobType>> = ({ rows }) => {
-    const columns: GridColDef[] = React.useMemo(() => {
-        if (rows.length === 0) return []; // Return empty columns if there are no rows
 
-        const jobKeys = Object.keys(rows[0]); // Get the keys of the first job object
+    const columns: GridColDef[] = React.useMemo(() => {
+        if (rows.length === 0) return [];
+        const jobKeys = Object.keys(rows[0]);
         const generatedColumns: GridColDef[] = jobKeys.map((key) => ({
             field: key,
             headerName: key,
             width: 150,
             editable: true,
+            
         }));
 
         return generatedColumns;
