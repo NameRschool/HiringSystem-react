@@ -5,6 +5,7 @@ import CustomDataGrid from '../components/Tabel';
 import { IconButton } from '@mui/material';
 import AddIcon from '@material-ui/icons/Add';
 import {useNavigate} from 'react-router-dom';
+import TransitionsModal from '../components/CandidatesModal';
 
 
 

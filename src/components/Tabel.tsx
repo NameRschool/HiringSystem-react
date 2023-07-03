@@ -45,6 +45,7 @@ const CustomDataGrid: React.FC<DataGridProps<IjobType>> = ({ rows, deleteJob, up
             const response = await getCandidatesList(row._id);
             setCandidatesList(response.data);
             console.log(response.data)
+            //<TransitionsModal list={response.data}></TransitionsModal>
         } catch (error) {
             console.log('Failed to retrieve candidates list', error);
         }
