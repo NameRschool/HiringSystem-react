@@ -15,7 +15,7 @@ interface DataGridProps<T> {
     updateJob: (row: IjobType, updatedData: Partial<IjobType>) => void;
 }
 
-const CustomDataGrid: React.FC<DataGridProps<IjobType>> = ({ rows, deleteJob, updateJob,list, hiddenColumns = [] }) => {
+const CustomDataGrid: React.FC<DataGridProps<IjobType>> = ({ rows, deleteJob, updateJob, hiddenColumns = [] }) => {
     const [isEditMode, setIsEditMode] = React.useState(true);
     const [candidatesList, setCandidatesList] = React.useState<IcandidatesInfo[]>([]);
 
