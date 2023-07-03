@@ -14,6 +14,18 @@ export const getJobs = async (): Promise<AxiosResponse<IjobType[]>> => {
   }
 }
 
+export const getCandidatesList  = async (jobId: string): Promise<AxiosResponse<IcandidatesInfo[]>> => {
+  try {
+    debugger
+    const response: AxiosResponse<IcandidatesInfo[]> = await axios.get(
+      `${baseUrl}/api/jobs/candidatesList/${jobId}`
+    );
+    return response
+  } catch (error) {
+    throw new Error(String(error))
+  }
+}
+
 export const getJobById = async (jobId: string): Promise<AxiosResponse<IjobType>> => {
   try {
     const response: AxiosResponse<IjobType> = await axios.get(
@@ -51,7 +63,7 @@ export const updateJobById = async (
   ): Promise<AxiosResponse<string>> => {
   try {
     const response: AxiosResponse<string> = await axios.put(
-      `${baseUrl}/api/jobs${jobId}`,
+      `${baseUrl}/api/jobs/${jobId}`,
       updatedData
     );
     return response

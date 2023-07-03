@@ -1,5 +1,6 @@
 import AddJob from './components/AddJob';
 import JobItem from './components/JobItem'
+import TransitionsModal from './components/CandidatesModal';
 
 const App: React.FC = () => {
 
@@ -8,6 +9,7 @@ const App: React.FC = () => {
       <center>
         <JobItem />
         <AddJob/>
+        <TransitionsModal/>
          </center>
 
     </main>
