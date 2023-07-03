@@ -4,7 +4,6 @@ import { DataGrid, GridColDef, GridDeleteIcon } from '@mui/x-data-grid';
 import { IconButton } from '@mui/material';
 import EditIcon from '@material-ui/icons/Edit';
 import { getCandidatesList } from '../api/JobsApi';
-import AddIcon from '@material-ui/icons/Add';
 import ListIcon from '@material-ui/icons/List';
 
 interface DataGridProps<T> {
