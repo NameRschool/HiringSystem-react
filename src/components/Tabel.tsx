@@ -53,7 +53,6 @@ const CustomDataGrid: React.FC<DataGridProps<IjobType>> = ({ rows, deleteJob, up
 
     const columns: GridColDef[] = React.useMemo(() => {
         if (rows.length === 0) return [];
-
         const jobKeys = Object.keys(rows[0]);
         const generatedColumns: GridColDef[] = jobKeys
             .filter((key) => !hiddenColumns.includes(key))
