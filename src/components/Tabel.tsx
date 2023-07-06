@@ -5,6 +5,7 @@ import { IconButton } from '@mui/material';
 import EditIcon from '@material-ui/icons/Edit';
 import ListIcon from '@material-ui/icons/List';
 import { useNavigate } from 'react-router-dom';
+import SaveIcon from '@material-ui/icons/Save';
 
 interface DataGridProps<T> {
     rows: T[];
@@ -23,6 +24,7 @@ const CustomDataGrid = <T extends Record<string, any>>({
     page,
 }: DataGridProps<T>) => {
     const [isEditMode, setIsEditMode] = React.useState(false);
+    const [tableKey, setTableKey] = React.useState(0);
     const navigate = useNavigate()
 
     const handleDelete = async (row: T) => {
@@ -34,15 +36,20 @@ const CustomDataGrid = <T extends Record<string, any>>({
         }
     };
 
+    const handleEdit = async (row: T) => {
+        await setIsEditMode(true);
+    };
+
     const handleUpdate = async (row: T) => {
         try {
-            setIsEditMode(true);
-            //////////////////////////////
-            await updateAction(row, row);
-            setIsEditMode(false);
+            const updatedData = { ...row };
+            await updateAction(row, updatedData);
             console.log('Update success');
         } catch (error) {
             console.log('Update error:', error);
+        } finally {
+            setIsEditMode(false);
+            setTableKey((prevKey) => prevKey + 1);
         }
     };
 
@@ -82,13 +89,22 @@ const CustomDataGrid = <T extends Record<string, any>>({
             headerName: 'update',
             width: 100,
             renderCell: (params) => (
-                <IconButton onClick={() => handleUpdate(params.row)}>
+                <IconButton onClick={() => handleEdit(params.row)}>
                     <EditIcon />
                 </IconButton>
             ),
         };
 
-
+        const handleSubmit: GridColDef = {
+            field: 'Submit',
+            headerName: 'Submit',
+            width: 100,
+            renderCell: (params) => (
+                <IconButton onClick={() => handleUpdate(params.row)}>
+                    <SaveIcon />
+                </IconButton>
+            ),
+        };
         const deleteColumn: GridColDef = {
             field: 'delete',
             headerName: 'delete',
@@ -100,7 +116,7 @@ const CustomDataGrid = <T extends Record<string, any>>({
             ),
         };
 
-        generatedColumns.push(deleteColumn, updateColumns, showColumns<T>({ page: page }));
+        generatedColumns.push(deleteColumn, updateColumns, handleSubmit, showColumns<T>({ page: page }));
 
         return generatedColumns;
     }, [rows, hiddenColumns, isEditMode, handleUpdate, handleDelete, navigate, page]);
@@ -108,10 +124,10 @@ const CustomDataGrid = <T extends Record<string, any>>({
 
 
 
-
     return (
         <Box sx={{ height: 400, width: '100%' }}>
             <DataGrid
+                key={tableKey}
                 rows={rows}
                 columns={columns}
                 initialState={{
@@ -122,7 +138,7 @@ const CustomDataGrid = <T extends Record<string, any>>({
                     },
                 }}
                 pageSizeOptions={[5]}
-                
+
             />
         </Box>
     );
