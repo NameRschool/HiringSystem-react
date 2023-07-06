@@ -7,8 +7,6 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { IconButton } from '@mui/material';
 
 const AddJob: React.FC = () => {
-    const navigate = useNavigate()
-
     const initialFormData: Omit<IjobType, '_id' | 'status' | 'date'> = {
         name: '',
         location: '',
@@ -18,6 +16,8 @@ const AddJob: React.FC = () => {
     };
 
     const [formData, setFormData] = useState<Omit<IjobType, '_id' | 'status' | 'date'>>(initialFormData);
+    const navigate = useNavigate()
+    
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         const updatedValue = name === 'requierments' ? value.split(',').map((item) => item.trim()) : value;
@@ -29,6 +29,7 @@ const AddJob: React.FC = () => {
 
 
     const handleSubmit = (formData: Omit<IjobType, '_id' | 'status' | 'date'>) => {
+
         try {
             const jobData: IjobType = {
                 _id: uuidv4(),
@@ -41,7 +42,6 @@ const AddJob: React.FC = () => {
                 .then((response) => {
                     console.log(response.data);
                     setFormData(initialFormData)
-
                 })
                 .catch((error) => {
                     console.log(error);
@@ -60,7 +60,7 @@ const AddJob: React.FC = () => {
                 handleSubmit={handleSubmit}
                 requiredFields={['name', 'location', 'requierments']}
             />
-            
+
             <IconButton onClick={() => navigate('/itemJob')}>
                 <ArrowForwardIcon />
             </IconButton>

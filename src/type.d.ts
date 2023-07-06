@@ -7,7 +7,7 @@ interface IcandidatesInfo {
     interview: Boolean;
     screeningCall: Boolean;
     task: Boolean;
-    cv: String
+    cv: Boolean
 }
 
 interface IjobType {
