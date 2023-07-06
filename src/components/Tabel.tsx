@@ -4,6 +4,7 @@ import { DataGrid, GridColDef, GridDeleteIcon } from '@mui/x-data-grid';
 import { IconButton } from '@mui/material';
 import EditIcon from '@material-ui/icons/Edit';
 import ListIcon from '@material-ui/icons/List';
+import {useNavigate} from 'react-router-dom';
 
 interface DataGridProps<T> {
     rows: T[];
@@ -19,6 +20,7 @@ const CustomDataGrid = <T extends Record<string, any>>({
     updateAction,
 }: DataGridProps<T>) => {
     const [isEditMode, setIsEditMode] = React.useState(false);
+    const navigate = useNavigate()
 
     const handleDelete = async (row: T) => {
         try {
@@ -72,13 +74,11 @@ const CustomDataGrid = <T extends Record<string, any>>({
             headerName: 'CandidatesList',
             width: 100,
             renderCell: (params) => (
-                <IconButton onClick={() => aaaa(params.row)}>
+                <IconButton onClick={() => navigate('/candidatesPage',{ state: { rowData: params.row } })}>
                     <ListIcon />
                 </IconButton>
             ),
         };
-
-
 
         const deleteColumn: GridColDef = {
             field: 'delete',

@@ -19,9 +19,7 @@ const Inputs = <T extends Record<string, any>>({
         event.preventDefault();
         handleSubmit(formData);
     };
-    // const handleRefresh = () => {
-    //     window.location.reload();
-    // };
+
     return (
         <Box
             component="form"

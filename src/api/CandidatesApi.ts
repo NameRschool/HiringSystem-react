@@ -19,7 +19,7 @@ export const getCandidatesById = async (
 ): Promise<AxiosResponse<IcandidatesType>> => {
     try {
         const response: AxiosResponse<IcandidatesType> = await axios.get(
-            `${baseUrl}/api/jobs/${candidatesId}`
+            `${baseUrl}/api/candidates/${candidatesId}`
         );
         return response;
     } catch (error) {
@@ -36,7 +36,7 @@ export const createCandidates = async (
             ...formData,
         };
         const response: AxiosResponse<string> = await axios.post(
-            `${baseUrl}/api/jobs`,
+            `${baseUrl}/api/candidates`,
             candidatesData
         );
         return response;
@@ -51,7 +51,7 @@ export const UpdateCandidatById = async (
 ): Promise<AxiosResponse<string>> => {
     try {
         const response: AxiosResponse<string> = await axios.put(
-            `${baseUrl}/api/jobs${candidatId}`,
+            `${baseUrl}/api/candidates/${candidatId}`,
             updatedData
         );
         return response
@@ -65,7 +65,7 @@ export const deleteCandidatById = async (
     ): Promise<AxiosResponse<String>> => {
     try {
         const response: AxiosResponse<string> = await axios.delete(
-            `${baseUrl}/api/jobs/${candidatId}`
+            `${baseUrl}/api/candidates/${candidatId}`
         );
         return response;
     } catch (error) {

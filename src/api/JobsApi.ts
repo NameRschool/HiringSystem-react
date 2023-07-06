@@ -16,7 +16,6 @@ export const getJobs = async (): Promise<AxiosResponse<IjobType[]>> => {
 
 export const getCandidatesList  = async (jobId: string): Promise<AxiosResponse<IcandidatesInfo[]>> => {
   try {
-    debugger
     const response: AxiosResponse<IcandidatesInfo[]> = await axios.get(
       `${baseUrl}/api/jobs/candidatesList/${jobId}`
     );
