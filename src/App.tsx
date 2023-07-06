@@ -1,15 +1,14 @@
 import AddJob from './components/AddJob';
 import JobItem from './components/JobItem'
-import TransitionsModal from './components/CandidatesModal';
 
 const App: React.FC = () => {
 
   return (
     <main className='App'>
+      <title>communtiy</title>
       <center>
         <JobItem />
         <AddJob/>
-        <TransitionsModal/>
          </center>
 
     </main>

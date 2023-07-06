@@ -47,7 +47,7 @@ export const createCandidates = async (
 
 export const UpdateCandidatById = async (
     candidatId: string,
-    updatedData: Partial<IjobType>
+    updatedData: Partial<IcandidatesInfo>
 ): Promise<AxiosResponse<string>> => {
     try {
         const response: AxiosResponse<string> = await axios.put(

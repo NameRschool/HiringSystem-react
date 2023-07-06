@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { getJobs, updateJobById, deleteJobById, getCandidatesList } from '../api/JobsApi'
+import { getJobs, updateJobById, deleteJobById } from '../api/JobsApi'
 import { AxiosResponse } from 'axios';
 import CustomDataGrid from './Tabel';
 
 
 const JobItem: React.FC = () => {
   const [jobs, setJobs] = useState<IjobType[]>([]);
-  const [selectedJobCandidates, setCandidatesList] = useState<IcandidatesInfo[]>([]);
 
   useEffect(() => {
     fetchJobs()
@@ -25,14 +24,6 @@ const JobItem: React.FC = () => {
       .catch((err: Error) => console.log(err));
   };
 
-  const fetchCandidatesList = async (row: IjobType):Promise<void> => {
-    try {
-      const response = await getCandidatesList(row._id);
-      setCandidatesList(response.data);
-    } catch (error) {
-      console.log(' error:', error);
-    }
-  };
 
   const deleteJob = async (row: IjobType) => {
     try {
@@ -58,7 +49,7 @@ const JobItem: React.FC = () => {
   return (
     <div className="Card">
       <h1>My jobs</h1>
-      <CustomDataGrid rows={jobs} list={fetchCandidatesList} deleteJob={deleteJob}  updateJob={UpdateJob}   hiddenColumns={['_id', 'id','candidatesList']} />
+      <CustomDataGrid rows={jobs}  deleteAction={deleteJob}  updateAction={UpdateJob}   hiddenColumns={['_id', 'id','candidatesList']} />
     </div>
   )
   }

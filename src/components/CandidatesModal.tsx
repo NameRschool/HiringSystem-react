@@ -1,55 +1,58 @@
-import * as React from 'react';
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import React, { useEffect, useState } from 'react'
+import { getCandidatesList } from '../api/JobsApi'
+import CustomDataGrid from './Tabel';
+import { UpdateCandidatById, deleteCandidatById } from '../api/CandidatesApi';
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
 
-export default function TransitionsModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+const CandidatesList: React.FC = () => {
+  const [selectedJobCandidates, setCandidatesList] = useState<IcandidatesInfo[]>([]);
+
+  // useEffect(() => {
+  //   fetchCandidatesList(row)
+  // }, [])
+
+
+
+  const fetchCandidatesList = async (row: IjobType): Promise<void> => {
+    try {
+      const response = await getCandidatesList(row._id);
+      const candidates = response.data.map((selectedJobCandidates, index) => ({
+        ...selectedJobCandidates,
+        id: index + 1,
+      }));
+      setCandidatesList(candidates);
+      console.log(response.data)
+    } catch (error) {
+      console.log('Failed to retrieve candidates list', error);
+    }
+  }
+
+  const deleteCandidates = async (row: IcandidatesInfo) => {
+    try {
+      const response = await deleteCandidatById(row.candidatesId);
+      console.log('Delete response:', response.data);
+    } catch (error) {
+      console.log('Delete error:', error);
+    }
+  };
+
+  const UpdateCandidates = async (row: IcandidatesInfo, updatedData: Partial<IcandidatesInfo>) => {
+    try {
+      const response = await UpdateCandidatById(row.candidatesId, updatedData);
+      console.log('Update success:', response.data);
+    } catch (error) {
+      console.log('Update error:', error);
+    }
+  };
+
+
 
   return (
-    <div>
-      <Button onClick={handleOpen}>Open modal</Button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
-        }}
-      >
-        <Fade in={open}>
-          <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-          </Box>
-        </Fade>
-      </Modal>
+    <div className="Card">
+      <h1>CandidatesList</h1>
+      <CustomDataGrid rows={selectedJobCandidates}  deleteAction={deleteCandidates} updateAction={UpdateCandidates} hiddenColumns={['candidatesId', 'id']} />
     </div>
-  );
+  )
 }
+
+export default CandidatesList
