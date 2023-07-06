@@ -27,7 +27,6 @@ const JobItem: React.FC = () => {
             .catch((err: Error) => console.log(err));
     };
 
-
     const deleteJob = async (row: IjobType) => {
         try {
             const response = await deleteJobById(row._id);
@@ -46,16 +45,13 @@ const JobItem: React.FC = () => {
         }
     };
 
-
-
-
     return (
         <div className="Card">
             <h1>My jobs</h1>
             <IconButton onClick={() => navigate('/addJob')}>
                 <AddIcon />
             </IconButton>
-            <CustomDataGrid rows={jobs} deleteAction={deleteJob} updateAction={UpdateJob} hiddenColumns={['_id', 'id', 'candidatesList']} />
+            <CustomDataGrid rows={jobs} deleteAction={deleteJob} updateAction={UpdateJob} hiddenColumns={['_id', 'id', 'candidatesList']} page={ '/candidatesPage' }/>
         </div>
     )
 }

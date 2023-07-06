@@ -17,6 +17,7 @@ const AddJob: React.FC = () => {
 
     const [formData, setFormData] = useState<Omit<IjobType, '_id' | 'status' | 'date'>>(initialFormData);
     const navigate = useNavigate()
+    
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         const updatedValue = name === 'requierments' ? value.split(',').map((item) => item.trim()) : value;

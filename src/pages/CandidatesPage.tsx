@@ -24,17 +24,11 @@ const CandidatesList: React.FC = () => {
         try {
             const response = await getCandidatesList(row._id);
             console.log(response.data)
-            const candidates = response.data.map(async (selectedJobCandidates, index) => {
-                const candidateResponse = await getCandidatesById(selectedJobCandidates.candidatesId);
-                const candidateData = candidateResponse.data;
-                return {
-                    id: index + 1,
-                    ...candidateData,
-                    ...selectedJobCandidates,
-                };
-            });
-            const updatedCandidates = await Promise.all(candidates);
-            setCandidatesList(updatedCandidates);
+            const candidates = response.data.map((selectedJobCandidates, index) => ({
+                ...selectedJobCandidates,
+                id: index + 1,
+            }));
+            setCandidatesList(candidates);
             console.log(response.data)
         } catch (error) {
             console.log('Failed to retrieve candidates list', error);
@@ -64,7 +58,7 @@ const CandidatesList: React.FC = () => {
     return (
         <div className="Card">
             <h1>CandidatesList</h1>
-            <CustomDataGrid rows={selectedJobCandidates} deleteAction={deleteCandidates} updateAction={UpdateCandidates} hiddenColumns={['candidatesId', 'id', '_id', '__v']} />
+            <CustomDataGrid rows={selectedJobCandidates} deleteAction={deleteCandidates} updateAction={UpdateCandidates} hiddenColumns={['candidatesId', 'id', '_id', '__v']} page={'/candidateDetails'} />
             <IconButton onClick={() => navigate('/itemJob')}>
                 <ArrowForwardIcon />
             </IconButton>
